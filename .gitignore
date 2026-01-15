@@ -1,0 +1,11 @@
+# Temporary data from Kaggle
+temp_data/
+
+# Kaggle API token
+kaggle.json
+
+# Python virtual environment
+venv/
+
+# Python cache
+__pycache__/
