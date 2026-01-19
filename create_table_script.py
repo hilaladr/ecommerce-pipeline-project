@@ -3,6 +3,8 @@ import os
 from pathlib import Path
 from snowflake.connector import connect
 
+# create table di snowflake dgn format berdasarkan file csv di folder temp_data 
+
 def generate_script() :
 
     sql_table = ''
