@@ -3,6 +3,8 @@ import json
 import boto3
 from pathlib import Path
 
+# Downloading files from kaggle and upload them to amazon s3
+
 # Set config directory BEFORE importing KaggleApi
 os.environ['KAGGLE_CONFIG_DIR'] = r'/home/hadryantama/ecommerce-pipeline-project'
 
@@ -46,11 +48,11 @@ s3 = boto3.client('s3', aws_access_key_id=AWS_ACCESS_KEY,
 
 for item in Path(DOWNLOAD_PATH).iterdir() :
     s3_raw = f'raw/{item.name}'
-    if not s3.head_object(Bucket=BUCKET_NAME, Key=s3_raw) :
-        print('Uploading file...')
+    try :
+        s3.head_object(Bucket=BUCKET_NAME, Key=s3_raw)
+        print(f'File {item.name} already exists')
+            # os.remove(item)
+    except :
+        print(f'Uploading file : {item.name}')
         s3.upload_file(item, BUCKET_NAME, Key=s3_raw)
-        os.remove(item)
-    else :
-        print('File already exists')
-    break
 

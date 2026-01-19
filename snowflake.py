@@ -7,6 +7,8 @@ import pandas as pd
 from sqlalchemy import create_engine
 from snowflake.sqlalchemy import URL
 
+# copy local data directly to snowflake db
+
 conn = create_engine(URL(
     user="HILALADR",
     password="N!celySNOWFLAKE00",
