@@ -1,0 +1,8 @@
+boto3
+kaggle
+pandas
+python-dotenv
+snowflake-connector-python
+streamlit
+pyarrow
+
