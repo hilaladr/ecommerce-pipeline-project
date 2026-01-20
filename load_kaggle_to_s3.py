@@ -8,8 +8,6 @@ from pathlib import Path
 # Set config directory BEFORE importing KaggleApi
 os.environ['KAGGLE_CONFIG_DIR'] = r'/home/hadryantama/ecommerce-pipeline-project'
 
-import pandas as pd
-import requests
 from sqlalchemy import create_engine
 from kaggle.api.kaggle_api_extended import KaggleApi
 

@@ -1,0 +1,50 @@
+[0m03:15:53.044419 [debug] [MainThread]: Sending event: {'category': 'dbt', 'action': 'invocation', 'label': 'start', 'context': [<snowplow_tracker.self_describing_json.SelfDescribingJson object at 0x792762e2dd00>, <snowplow_tracker.self_describing_json.SelfDescribingJson object at 0x792762645550>, <snowplow_tracker.self_describing_json.SelfDescribingJson object at 0x792762e2f2f0>]}
+
+
+============================== 03:15:53.050523 | ff024c93-50d4-4dff-b638-eceab5ad0070 ==============================
+[0m03:15:53.050523 [info ] [MainThread]: Running with dbt=1.11.2
+[0m03:15:53.051534 [debug] [MainThread]: running dbt with arguments {'use_experimental_parser': 'False', 'version_check': 'True', 'printer_width': '80', 'static_parser': 'True', 'target_path': 'None', 'empty': 'None', 'use_colors': 'True', 'log_path': 'logs', 'quiet': 'False', 'introspect': 'True', 'no_print': 'None', 'cache_selected_only': 'False', 'warn_error_options': 'WarnErrorOptionsV2(error=[], warn=[], silence=[])', 'send_anonymous_usage_stats': 'True', 'debug': 'False', 'write_json': 'True', 'log_format': 'default', 'warn_error': 'None', 'partial_parse': 'True', 'profiles_dir': '/home/hadryantama/.dbt', 'log_cache_events': 'False', 'indirect_selection': 'eager', 'invocation_command': 'dbt init olist_transform', 'fail_fast': 'False'}
+[0m03:15:53.089231 [info ] [MainThread]: Creating dbt configuration folder at /home/hadryantama/.dbt
+[0m03:15:53.091465 [debug] [MainThread]: Starter project path: /home/hadryantama/.local/lib/python3.12/site-packages/dbt/include/starter_project
+[0m03:15:53.097563 [info ] [MainThread]: 
+Your new dbt project "olist_transform" was created!
+
+For more information on how to configure the profiles.yml file,
+please consult the dbt documentation here:
+
+  https://docs.getdbt.com/docs/configure-your-profile
+
+One more thing:
+
+Need help? Don't hesitate to reach out to us via GitHub issues or on Slack:
+
+  https://community.getdbt.com/
+
+Happy modeling!
+
+[0m03:15:53.099522 [info ] [MainThread]: Setting up your profile.
+[0m03:16:05.305944 [debug] [MainThread]: Snowflake adapter: Setting snowflake.connector to ERROR (file logging only)
+[0m03:16:05.313235 [debug] [MainThread]: Snowflake adapter: Setting botocore to ERROR (file logging only)
+[0m03:16:05.314733 [debug] [MainThread]: Snowflake adapter: Setting boto3 to ERROR (file logging only)
+[0m03:18:00.039493 [info ] [MainThread]: Profile olist_transform written to /home/hadryantama/.dbt/profiles.yml using target's profile_template.yml and your supplied values. Run 'dbt debug' to validate the connection.
+[0m03:18:00.044516 [debug] [MainThread]: Resource report: {"command_name": "init", "command_success": true, "command_wall_clock_time": 127.092865, "process_in_blocks": "200552", "process_kernel_time": 0.486783, "process_mem_max_rss": "204716", "process_out_blocks": "80", "process_user_time": 4.309898}
+[0m03:18:00.047372 [debug] [MainThread]: Command `dbt init` succeeded at 03:18:00.047086 after 127.10 seconds
+[0m03:18:00.048554 [debug] [MainThread]: Sending event: {'category': 'dbt', 'action': 'invocation', 'label': 'end', 'context': [<snowplow_tracker.self_describing_json.SelfDescribingJson object at 0x7927625e1700>, <snowplow_tracker.self_describing_json.SelfDescribingJson object at 0x79274a21c290>, <snowplow_tracker.self_describing_json.SelfDescribingJson object at 0x79274b4f8050>]}
+[0m03:18:00.049812 [debug] [MainThread]: Flushing usage events
+[0m03:18:00.953372 [debug] [MainThread]: An error was encountered while trying to flush usage events
+[0m04:38:58.830293 [debug] [MainThread]: Sending event: {'category': 'dbt', 'action': 'invocation', 'label': 'start', 'context': [<snowplow_tracker.self_describing_json.SelfDescribingJson object at 0x7a6b10048d70>, <snowplow_tracker.self_describing_json.SelfDescribingJson object at 0x7a6b0fb1e8a0>, <snowplow_tracker.self_describing_json.SelfDescribingJson object at 0x7a6b0f987320>]}
+
+
+============================== 04:38:58.837254 | 9726308d-9639-498f-9fdc-e6d28c7712d5 ==============================
+[0m04:38:58.837254 [info ] [MainThread]: Running with dbt=1.11.2
+[0m04:38:58.838580 [debug] [MainThread]: running dbt with arguments {'warn_error': 'None', 'static_parser': 'True', 'no_print': 'None', 'empty': 'False', 'target_path': 'None', 'use_experimental_parser': 'False', 'indirect_selection': 'eager', 'fail_fast': 'False', 'profiles_dir': '/home/hadryantama/.dbt', 'use_colors': 'True', 'warn_error_options': 'WarnErrorOptionsV2(error=[], warn=[], silence=[])', 'log_cache_events': 'False', 'introspect': 'True', 'version_check': 'True', 'cache_selected_only': 'False', 'write_json': 'True', 'debug': 'False', 'printer_width': '80', 'log_format': 'default', 'invocation_command': 'dbt run', 'send_anonymous_usage_stats': 'True', 'quiet': 'False', 'log_path': 'logs', 'partial_parse': 'True'}
+[0m04:38:58.839961 [error] [MainThread]: Encountered an error:
+Runtime Error
+  No dbt_project.yml found at expected path /home/hadryantama/ecommerce-pipeline-project/dbt_project.yml
+  Verify that each entry within packages.yml (and their transitive dependencies) contains a file named dbt_project.yml
+  
+[0m04:38:58.842224 [debug] [MainThread]: Resource report: {"command_name": "run", "command_success": false, "command_wall_clock_time": 0.1415726, "process_in_blocks": "0", "process_kernel_time": 0.2394, "process_mem_max_rss": "101448", "process_out_blocks": "24", "process_user_time": 2.658213}
+[0m04:38:58.843485 [debug] [MainThread]: Command `dbt run` failed at 04:38:58.843253 after 0.14 seconds
+[0m04:38:58.844773 [debug] [MainThread]: Sending event: {'category': 'dbt', 'action': 'invocation', 'label': 'end', 'context': [<snowplow_tracker.self_describing_json.SelfDescribingJson object at 0x7a6b102e7080>, <snowplow_tracker.self_describing_json.SelfDescribingJson object at 0x7a6b0faaa0c0>, <snowplow_tracker.self_describing_json.SelfDescribingJson object at 0x7a6b101a67e0>]}
+[0m04:38:58.845710 [debug] [MainThread]: Flushing usage events
+[0m04:38:59.770310 [debug] [MainThread]: An error was encountered while trying to flush usage events
