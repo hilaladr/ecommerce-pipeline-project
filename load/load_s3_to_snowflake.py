@@ -32,7 +32,7 @@ def execute_copy_sql() :
     cur = conn.cursor()
     for script in generate_copy_sql() :
         print(f"Copying file {script.split()[4].replace('@MY_S3_STAGE/','')} to {script.split()[2]}")
-        cur.execute(script)
+        # cur.execute(script)
 
     cur.close()
     conn.close()
