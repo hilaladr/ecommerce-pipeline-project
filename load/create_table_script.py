@@ -2,21 +2,24 @@ import pandas as pd
 import os
 from pathlib import Path
 from snowflake.connector import connect
+from dotenv import load_dotenv
 
 # create table di snowflake dgn format berdasarkan file csv di folder temp_data 
 
 def generate_script() :
 
-    sql_table = ''
+    sql_table = []
+    file_path_list = Path('./temp_data').iterdir()
 
-    for file_path in Path('./temp_data').iterdir() :
+    for file_path in file_path_list :
         df = pd.read_csv(file_path, nrows=20)
         table_name = str(file_path).split('/')[-1].replace('.csv','').replace('olist_','').replace('_dataset','')
 
-        sql_table += f'CREATE OR REPLACE TABLE {table_name.strip().upper()} ('
+        sql_create = f'CREATE OR REPLACE TABLE {table_name.strip().upper()} ('
 
         for col in df.columns :
             col_type = df[col].dtypes
+
             match col_type :
                 case 'object' :
                     field_type = 'VARCHAR(16777216)'
@@ -24,44 +27,56 @@ def generate_script() :
                     field_type = 'INTEGER'
                 case 'float64' :
                     field_type  = 'FLOAT'
-            sql_column = f'{col.upper()} {field_type},\n'
-            sql_table += sql_column
-        sql_table += ');'
-        sql_table = sql_table.replace(',\n);','\n);\n\n')
+
+            sql_columns = f'{col.upper()} {field_type},'
+            sql_create += sql_columns
+
+        sql_create += ');'
+        sql_table.append(sql_create.replace(',);',');'))
+        
     return sql_table
 
 def create_table() :
-
-    # split per table
-    script = generate_script().replace('\n','').split(";")
+    load_dotenv()
+    script = generate_script()
 
     print("❄️ Connecting to Snowflake...")
 
     # create connection
-    conn = connect(
-        user="HILALADR",
-        password="N!celySNOWFLAKE00",
-        account="QSSEGWF-UY63392",
-        warehouse="COMPUTE_WH",
-        role="ACCOUNTADMIN",
-        database="OLIST_DWH",
-        schema="PUBLIC"
-    )
-    cur = conn.cursor()
+    try :
+        with connect(
+            user=os.environ.get('SNOWFLAKE_USER'),
+            password=os.environ.get('SNOWFLAKE_PASSWORD'),
+            account=os.environ.get('SNOWFLAKE_ACCOUNT'),
+            warehouse="COMPUTE_WH",
+            role="ACCOUNTADMIN",
+            database="OLIST_DWH",
+            schema="PUBLIC"
+        ) as conn :
+            # Pull existing table list
+            print("✅ Connection successful!")
+            with conn.cursor() as cur :
+                existing_tables = cur.execute('''SELECT table_name FROM INFORMATION_SCHEMA.TABLES 
+                                WHERE table_type = 'BASE TABLE';''').fetchall()
+                existing_tables = [item[0] for item in existing_tables]
 
-    # execute sql script
-    for i in script :
-        if i != '' :
-            try:
-                print(f"🔨 Creating Table {i.split()[4]}")
-                cur.execute(i)
-            except Exception as e:
-                print(f"❌ Error: {e}")
-
-    cur.close()  
-    conn.close()
+                for i in script :
+                    # try to execute script
+                    try:
+                        table_name = i.split()[4]
+                        if table_name in existing_tables : 
+                            print(f"Table {table_name} already exists...")
+                        else :
+                            print(f"🔨 Cting Table {table_name}")
+                            cur.execute(i)
+                        print(f"🔨 Creating/Replacing Table {table_name}...")
+                        cur.execute(i)
+                        print(f"✅ Table {table_name} created successfully.")
+                    except Exception as e:
+                        print(f"❌ Error: {e}")
+    except Exception as e:
+        print(f"❌ Failed to connect. Error: {e}")
 
 if __name__ == "__main__":
-    # script = generate_script().replace('\n','').strip().split(";")
-    # print(script)
     create_table()
+
