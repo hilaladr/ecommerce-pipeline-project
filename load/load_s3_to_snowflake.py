@@ -1,5 +1,6 @@
 from load_s3_to_snowflake.connector import connect
 from pathlib import Path
+from dotenv import load_dotenv
 
 # copy local data directly to snowflake db
 
@@ -19,19 +20,23 @@ def generate_copy_sql() :
 
 
 def execute_copy_sql() :
+    load_dotenv()
+    # snowflake connection
     conn= connect(
-            user="HILALADR",
-            password="N!celySNOWFLAKE00",
-            account="QSSEGWF-UY63392",
-            warehouse="COMPUTE_WH",
-            role="ACCOUNTADMIN",
+            user=os.environ.get('SNOWFLAKE_USER'),
+            password=os.environ.get('SNOWFLAKE_PASSWORD'),
+            account=os.environ.get('SNOWFLAKE_ACCOUNT'),
+            warehouse=os.environ.get('SNOWFLAKE_WAREHOUSE'),
+            role=os.environ.get('SNOWFLAKE_ROLE'),
             database="OLIST_DWH",
             schema="PUBLIC"
         )
 
     cur = conn.cursor()
     for script in generate_copy_sql() :
-        print(f"Copying file {script.split()[4].replace('@MY_S3_STAGE/','')} to {script.split()[2]}")
+        file_name = script.split()[4].replace('@MY_S3_STAGE/','')
+        target_table = script.split()[2]
+        print(f"Copying file {file_name} to {target_table}")
         # cur.execute(script)
 
     cur.close()

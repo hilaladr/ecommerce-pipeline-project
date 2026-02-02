@@ -52,26 +52,25 @@ def create_table() :
             role="ACCOUNTADMIN",
             database="OLIST_DWH",
             schema="PUBLIC"
+
         ) as conn :
             # Pull existing table list
-            print("✅ Connection successful!")
             with conn.cursor() as cur :
+                # check existing tables
                 existing_tables = cur.execute('''SELECT table_name FROM INFORMATION_SCHEMA.TABLES 
                                 WHERE table_type = 'BASE TABLE';''').fetchall()
                 existing_tables = [item[0] for item in existing_tables]
 
                 for i in script :
-                    # try to execute script
+                    # try to execute create table script
                     try:
                         table_name = i.split()[4]
+                        # check if table already exists, create if not
                         if table_name in existing_tables : 
                             print(f"Table {table_name} already exists...")
                         else :
-                            print(f"🔨 Cting Table {table_name}")
+                            print(f"🔨 Creating Table {table_name}")
                             cur.execute(i)
-                        print(f"🔨 Creating/Replacing Table {table_name}...")
-                        cur.execute(i)
-                        print(f"✅ Table {table_name} created successfully.")
                     except Exception as e:
                         print(f"❌ Error: {e}")
     except Exception as e:
