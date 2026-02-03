@@ -1,24 +1,27 @@
 import streamlit as st
 import pandas as pd
 import snowflake.connector
+from dotenv import load_dotenv
 
 # --- 1. KONFIGURASI KONEKSI ---
 # (Pastikan user ini punya akses ke schema ANALYTICS hasil dbt tadi)
 def init_connection():
+    load_dotenv()
     return snowflake.connector.connect(
-        user="HILALADR",
-            password="N!celySNOWFLAKE00",
-            account="QSSEGWF-UY63392",
-            warehouse="COMPUTE_WH",
-            role="ACCOUNTADMIN",
-            database="OLIST_DWH",
-            schema="ANALYTICS"
+        user=os.environ.get('SNOWFLAKE_USER'),
+        password=os.environ.get('SNOWFLAKE_PASSWORD'),
+        account=os.environ.get('SNOWFLAKE_ACCOUNT'),
+        warehouse=os.environ.get('SNOWFLAKE_WAREHOUSE'),
+        role=os.environ.get('SNOWFLAKE_ROLE'),
+        database="OLIST_DWH",
+        schema="ANALYTICS"
     )
 
 conn = init_connection()
 
 @st.cache_data
 def load_data():
+    conn = init_connection()
     query = "SELECT * FROM REVENUE_DAILY ORDER BY ORDER_DAY"
     cur = conn.cursor()
     cur.execute(query)

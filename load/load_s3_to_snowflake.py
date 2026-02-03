@@ -37,7 +37,7 @@ def execute_copy_sql() :
         file_name = script.split()[4].replace('@MY_S3_STAGE/','')
         target_table = script.split()[2]
         print(f"Copying file {file_name} to {target_table}")
-        # cur.execute(script)
+        cur.execute(script)
 
     cur.close()
     conn.close()

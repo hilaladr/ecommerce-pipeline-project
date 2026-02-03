@@ -60,9 +60,9 @@ def create_table() :
                 existing_tables = cur.execute('''SELECT table_name FROM INFORMATION_SCHEMA.TABLES 
                                 WHERE table_type = 'BASE TABLE';''').fetchall()
                 existing_tables = [item[0] for item in existing_tables]
-
+               
+                # try to execute create table script
                 for i in script :
-                    # try to execute create table script
                     try:
                         table_name = i.split()[4]
                         # check if table already exists, create if not
