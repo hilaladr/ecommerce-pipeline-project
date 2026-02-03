@@ -2,7 +2,6 @@ import os
 import boto3
 from pathlib import Path
 from dotenv import load_dotenv
-import shutil
 
 
 
@@ -46,7 +45,6 @@ def kaggle_to_s3() :
         except :
             print(f'Uploading file : {item.name}')
             s3.upload_file(item, BUCKET_NAME, Key=s3_raw)
-    shutil.rmtree(DOWNLOAD_PATH) 
 
 if __name__ == "__main__":
     kaggle_to_s3()

@@ -3,6 +3,7 @@ import os
 from pathlib import Path
 from snowflake.connector import connect
 from dotenv import load_dotenv
+import shutil
 
 # create table di snowflake dgn format berdasarkan file csv di folder temp_data 
 
@@ -33,7 +34,7 @@ def generate_script() :
 
         sql_create += ');'
         sql_table.append(sql_create.replace(',);',');'))
-        
+    shutil.rmtree('temp_data') 
     return sql_table
 
 def create_table() :
